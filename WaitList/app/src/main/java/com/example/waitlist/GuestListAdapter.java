@@ -1,14 +1,19 @@
 package com.example.waitlist;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.waitlist.data.WaitlistContract;
+
 public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.GuestViewHolder> {
 
+    //private Context mContext;
+    private Cursor mCursor;
     private Context mContext;
 
     private int mCount;
@@ -16,9 +21,13 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 //    public GuestListAdapter(Context context) {
 //        this.mContext = context;
 //    }
-    public GuestListAdapter(Context context, int count) {
+//    public GuestListAdapter(Context context, int count) {
+//        this.mContext = context;
+//        mCount = count;
+//    }
+    public GuestListAdapter(Context context, Cursor cursor) {
         this.mContext = context;
-        mCount = count;
+        this.mCursor = cursor;
     }
 
     @Override
@@ -30,6 +39,12 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 
     @Override
     public void onBindViewHolder(GuestViewHolder holder, int position) {
+        if (!mCursor.moveToPosition(position))
+            return; // bail if returned null
+        String name = mCursor.getString(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_GUEST_NAME));
+        int partySize = mCursor.getInt(mCursor.getColumnIndex(WaitlistContract.WaitlistEntry.COLUMN_PARTY_SIZE));
+        holder.nameTextView.setText(name);
+       holder.partySizeTextView.setText(String.valueOf(partySize));
 
     }
 
@@ -39,8 +54,8 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
 //    }
     @Override
     public int getItemCount() {
-        return mCount;
-    }
+        //return mCount;
+        return mCursor.getCount();    }
 
     class GuestViewHolder extends RecyclerView.ViewHolder {
 
