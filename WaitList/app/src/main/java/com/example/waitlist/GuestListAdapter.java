@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.GuestViewHolder> {
+
     private Context mContext;
 
     public GuestListAdapter(Context context) {
@@ -32,7 +33,6 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
         return 0;
     }
 
-
     class GuestViewHolder extends RecyclerView.ViewHolder {
 
         TextView nameTextView;
@@ -44,7 +44,6 @@ public class GuestListAdapter extends RecyclerView.Adapter<GuestListAdapter.Gues
             nameTextView = (TextView) itemView.findViewById(R.id.name_text_view);
             partySizeTextView = (TextView) itemView.findViewById(R.id.party_size_text_view);
         }
-
     }
 
 }
